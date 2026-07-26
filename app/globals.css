@@ -3176,3 +3176,10 @@ body { background: var(--bg-1); color: var(--fg-1); }
   .wl-share-row { flex-direction: column; }
   .wl-foot { flex-direction: column; gap: 12px; text-align: center; }
 }
+
+/* ---- Feature showcase: missed dark-mode coverage (text sat on --ink,
+   invisible against the dark landing background) ---- */
+[data-theme="dark"] .pp-show-intro h2,
+[data-theme="dark"] .pp-show-copy h3,
+[data-theme="dark"] .pp-show-copy b { color: var(--paper); }
+[data-theme="dark"] .pp-spec li { color: var(--paper); }
