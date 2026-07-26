@@ -28,12 +28,6 @@ const isAuthRoute = createRouteMatcher([
 const MARKETING_HOST = process.env.NEXT_PUBLIC_MARKETING_HOST?.toLowerCase();
 const APP_HOST = process.env.NEXT_PUBLIC_APP_HOST?.toLowerCase();
 
-// Pre-launch: when on, the app + auth surface is sealed and every door leads
-// back to the waitlist at "/". Flip off on launch day to reopen the app.
-const WAITLIST_MODE = ["1", "true", "on"].includes(
-  (process.env.WAITLIST_MODE ?? "").toLowerCase(),
-);
-
 // Clerk is optional: when no publishable key is configured (e.g. preview
 // deploys without Clerk env), skip Clerk entirely so requests don't 500 on the
 // missing key. Production sets the key, so the full auth middleware runs.
@@ -42,12 +36,6 @@ const CLERK_ENABLED = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 const withClerk = clerkMiddleware(async (auth, req) => {
   const host = req.headers.get("host")?.toLowerCase().split(":")[0] ?? "";
   const url = req.nextUrl;
-
-  // Seal the app while the waitlist is live: app routes and auth pages bounce
-  // to the waitlist. The landing, /preview, and /api stay open.
-  if (WAITLIST_MODE && (isProtected(req) || isAuthRoute(req))) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
 
   const splitHosts = Boolean(MARKETING_HOST && APP_HOST);
 
@@ -85,9 +73,9 @@ const withClerk = clerkMiddleware(async (auth, req) => {
 export default function middleware(req: NextRequest, ev: NextFetchEvent) {
   // No Clerk configured (preview/dev, or a misconfigured key): we cannot
   // authenticate anyone, so FAIL CLOSED — never expose the app. Block every
-  // protected app route and auth page; only public surfaces (landing,
-  // /preview, /api, static) pass through. This prevents the dashboard from
-  // being served without a login if the Clerk key is ever missing/misnamed.
+  // protected app route and auth page; only public surfaces (landing, /api,
+  // static) pass through. This prevents the dashboard from being served
+  // without a login if the Clerk key is ever missing/misnamed.
   if (!CLERK_ENABLED) {
     if (isProtected(req) || isAuthRoute(req)) {
       return NextResponse.redirect(new URL("/", req.url));

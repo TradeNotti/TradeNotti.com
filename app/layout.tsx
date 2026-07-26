@@ -61,8 +61,8 @@ export default function RootLayout({
 
   // Clerk needs a publishable key at prerender time. On deploys where it isn't
   // configured (e.g. preview builds without Clerk env), skip the provider so the
-  // public waitlist still builds and serves; production sets the key, so auth is
-  // wrapped as normal.
+  // public landing page still builds and serves; production sets the key, so
+  // auth is wrapped as normal.
   if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
     return tree;
   }
