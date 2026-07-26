@@ -54,7 +54,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const tree = (
-    <html lang="en" data-theme="dark" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" data-theme="light" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   );
