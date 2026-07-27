@@ -348,6 +348,13 @@ export default function LandingPage() {
           <div className="pp-features-grid">
             <div className="pp-feat">
               <div className="pp-feat-icon">
+                <Icon name="flame" size={20} />
+              </div>
+              <h3>Habit streak tracker</h3>
+              <p>Build discipline day by day — track routines like &ldquo;no revenge trading&rdquo; and keep your streak alive.</p>
+            </div>
+            <div className="pp-feat">
+              <div className="pp-feat-icon">
                 <Icon name="layers" size={20} />
               </div>
               <h3>Multiple accounts</h3>
