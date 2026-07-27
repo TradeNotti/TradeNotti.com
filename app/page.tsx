@@ -10,7 +10,7 @@ export default function LandingPage() {
         </div>
         <div className="pp-right">
           <Link href="/login">Sign in</Link>
-          <Link href="/signup" className="oa-btn oa-btn-accent oa-btn-md">
+          <Link href="https://app.tradenotti.com/signup" className="oa-btn oa-btn-accent oa-btn-md">
             Get started
           </Link>
         </div>
@@ -30,10 +30,10 @@ export default function LandingPage() {
               drop in your chart screenshots, and TradeNotti transcribes, organizes, and files every trade for you.
             </p>
             <div className="pp-hero-cta">
-              <Link href="/signup" className="oa-btn oa-btn-accent oa-btn-md">
+              <Link href="https://app.tradenotti.com/signup" className="oa-btn oa-btn-accent oa-btn-md">
                 Get started <Icon name="arrow-right" size={16} />
               </Link>
-              <Link href="/signup" className="oa-btn oa-btn-ghost oa-btn-md">
+              <Link href="https://app.tradenotti.com/signup" className="oa-btn oa-btn-ghost oa-btn-md">
                 Free trial
               </Link>
             </div>
@@ -119,7 +119,7 @@ export default function LandingPage() {
             <h2>Everything you need to capture, organize, and review.</h2>
             <p>A clean workspace built around the way traders actually work.</p>
             <div style={{ marginTop: 24 }}>
-              <Link href="/signup" className="oa-btn oa-btn-accent oa-btn-md">
+              <Link href="https://app.tradenotti.com/signup" className="oa-btn oa-btn-accent oa-btn-md">
                 Get started <Icon name="arrow-right" size={16} />
               </Link>
             </div>
@@ -335,7 +335,7 @@ export default function LandingPage() {
               <h3>Ready to make journaling simple?</h3>
               <p>Capture, organize, and review every trade in one clean workspace.</p>
             </div>
-            <Link href="/signup" className="oa-btn oa-btn-accent oa-btn-md">
+            <Link href="https://app.tradenotti.com/signup" className="oa-btn oa-btn-accent oa-btn-md">
               Get started <Icon name="arrow-right" size={16} />
             </Link>
           </div>
@@ -387,7 +387,7 @@ export default function LandingPage() {
             <span style={{ color: "var(--gold-deep)" }}>Review with clarity.</span>
           </h2>
           <p>One clean workspace for journaling, reviewing, and improving — start free.</p>
-          <Link href="/signup" className="oa-btn oa-btn-accent oa-btn-md">
+          <Link href="https://app.tradenotti.com/signup" className="oa-btn oa-btn-accent oa-btn-md">
             Get started <Icon name="arrow-right" size={16} />
           </Link>
         </section>
