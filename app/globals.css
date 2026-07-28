@@ -3183,3 +3183,9 @@ body { background: var(--bg-1); color: var(--fg-1); }
 [data-theme="dark"] .pp-show-copy h3,
 [data-theme="dark"] .pp-show-copy b { color: var(--paper); }
 [data-theme="dark"] .pp-spec li { color: var(--paper); }
+
+/* ---- Pricing cards: same missed dark-mode coverage, fixed on first use ---- */
+[data-theme="dark"] .pp-plan-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+[data-theme="dark"] .pp-plan-card.featured { border-color: var(--gold); }
+[data-theme="dark"] .pp-plan-price { color: var(--paper); }
+[data-theme="dark"] .pp-plan-feats li { color: var(--paper); }

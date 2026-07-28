@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/session";
+import { maxAccountsFor } from "@/lib/billing";
 
 const profileSchema = z.object({
   name: z.string().trim().max(80).optional().or(z.literal("")),
@@ -53,7 +54,20 @@ export async function addAccount(formData: FormData) {
     kind: formData.get("kind") || "live",
     balance: formData.get("balance") ?? "",
   });
-  if (!parsed.success) return { ok: false as const };
+  if (!parsed.success) return { ok: false as const, error: "Check the account details and try again." };
+
+  const count = await prisma.account.count({ where: { userId: user.id } });
+  const max = maxAccountsFor(user.plan);
+  if (count >= max) {
+    return {
+      ok: false as const,
+      error:
+        user.plan === "ACTIVE"
+          ? `You've reached the ${max}-account limit on Pro.`
+          : `Upgrade to Pro to connect a 2nd account (trial is capped at ${max}).`,
+    };
+  }
+
   await prisma.account.create({
     data: {
       userId: user.id,

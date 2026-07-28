@@ -101,26 +101,56 @@ export function SettingsForm({
   );
 }
 
-export function AddAccountForm() {
+export function AddAccountForm({ count, max }: { count: number; max: number }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const atLimit = count >= max;
+
+  const usage = (
+    <div style={{ fontSize: 12.5, color: "var(--fg-2)" }}>
+      {count} of {max} account{max === 1 ? "" : "s"} used
+    </div>
+  );
+
+  if (atLimit) {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {usage}
+        <Button variant="secondary" disabled style={{ width: "100%", justifyContent: "center" }}>
+          Add trading account
+        </Button>
+        <a href="/pricing" style={{ fontSize: 12.5, color: "var(--gold-deep)", textAlign: "center" }}>
+          Upgrade to connect a 2nd account
+        </a>
+      </div>
+    );
+  }
 
   if (!open) {
     return (
-      <Button variant="secondary" icon="plus" onClick={() => setOpen(true)} style={{ width: "100%", justifyContent: "center" }}>
-        Add trading account
-      </Button>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {usage}
+        <Button variant="secondary" icon="plus" onClick={() => setOpen(true)} style={{ width: "100%", justifyContent: "center" }}>
+          Add trading account
+        </Button>
+      </div>
     );
   }
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(null);
     const fd = new FormData(e.currentTarget);
     startTransition(async () => {
-      await addAccount(fd);
-      setOpen(false);
-      router.refresh();
+      const res = await addAccount(fd);
+      if (res.ok) {
+        setOpen(false);
+        router.refresh();
+      } else {
+        setError(res.error ?? "Something went wrong.");
+      }
     });
   }
 
@@ -153,14 +183,39 @@ export function AddAccountForm() {
           <Input name="balance" placeholder="$100,000" />
         </Field>
       </div>
+      {error ? <div style={{ fontSize: 12.5, color: "var(--loss)" }}>{error}</div> : null}
       <div style={{ display: "flex", gap: 8 }}>
         <Button type="submit" variant="accent" disabled={pending}>
           {pending ? "Adding…" : "Add account"}
         </Button>
-        <Button variant="ghost" onClick={() => setOpen(false)}>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setOpen(false);
+            setError(null);
+          }}
+        >
           Cancel
         </Button>
       </div>
     </form>
+  );
+}
+
+export function ManageBillingButton() {
+  const [pending, startTransition] = useTransition();
+
+  function openPortal() {
+    startTransition(async () => {
+      const res = await fetch("/api/billing/portal", { method: "POST" });
+      const data = await res.json().catch(() => null);
+      if (data?.url) window.location.href = data.url;
+    });
+  }
+
+  return (
+    <Button variant="secondary" onClick={openPortal} disabled={pending} style={{ width: "100%", justifyContent: "center" }}>
+      {pending ? "Opening…" : "Manage billing"}
+    </Button>
   );
 }

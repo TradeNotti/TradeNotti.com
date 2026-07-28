@@ -9,6 +9,7 @@ export default function LandingPage() {
           <BrandLogo size={18} />
         </div>
         <div className="pp-right">
+          <Link href="/pricing">Pricing</Link>
           <Link href="https://app.tradenotti.com/login">Sign in</Link>
           <Link href="https://app.tradenotti.com/signup" className="oa-btn oa-btn-accent oa-btn-md">
             Get started
@@ -394,6 +395,9 @@ export default function LandingPage() {
 
         <div className="pp-foot">
           <span>© 2026 TradeNotti</span>
+          <Link href="/terms" style={{ color: "inherit" }}>
+            Terms
+          </Link>
         </div>
       </div>
     </div>

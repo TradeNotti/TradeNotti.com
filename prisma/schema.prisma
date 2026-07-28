@@ -29,6 +29,14 @@ model User {
   watchlist     String[] @default([])
   onboardedAt   DateTime?
 
+  // Billing — synced from Stripe via webhook (see lib/billing.ts, app/api/webhooks/stripe).
+  // A null stripeSubscriptionId means the user has never completed Checkout, regardless
+  // of `plan`'s default value — access checks must gate on that, not on `plan` alone.
+  plan                 PlanStatus @default(TRIALING)
+  trialEndsAt          DateTime?
+  stripeCustomerId     String?    @unique
+  stripeSubscriptionId String?    @unique
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -79,6 +87,17 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+// ---- Billing ----------------------------------------------------------------
+
+// Mirrors Stripe subscription status, collapsed to the states the app acts on.
+// incomplete/incomplete_expired -> CANCELED, unpaid -> PAST_DUE. See lib/billing.ts.
+enum PlanStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
 }
 
 // ---- Trading domain --------------------------------------------------------

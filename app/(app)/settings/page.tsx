@@ -1,13 +1,16 @@
 import { requireUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
+import { maxAccountsFor, planLabel, trialDaysLeft, PRO_PRICE_DISPLAY } from "@/lib/billing";
 import { Card, CardHeader } from "@/components/ui";
-import { SettingsForm, AddAccountForm } from "./settings-form";
+import { SettingsForm, AddAccountForm, ManageBillingButton } from "./settings-form";
 
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
   const user = await requireUser();
   const accounts = await prisma.account.findMany({ where: { userId: user.id }, orderBy: { createdAt: "asc" } });
+  const maxAccounts = maxAccountsFor(user.plan);
+  const daysLeft = trialDaysLeft(user.trialEndsAt);
 
   return (
     <div className="oa-page">
@@ -57,7 +60,23 @@ export default async function SettingsPage() {
               ))}
             </div>
             <div style={{ padding: 16, borderTop: "1px solid var(--line-2)" }}>
-              <AddAccountForm />
+              <AddAccountForm count={accounts.length} max={maxAccounts} />
+            </div>
+          </Card>
+
+          <Card style={{ marginTop: 16 }}>
+            <CardHeader overline="Billing" title={planLabel(user)} />
+            <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 10 }}>
+              <p style={{ fontSize: 13, color: "var(--fg-2)", margin: 0 }}>
+                {user.plan === "ACTIVE"
+                  ? `Pro — ${PRO_PRICE_DISPLAY}, up to ${maxAccounts} accounts.`
+                  : user.plan === "TRIALING"
+                    ? `Your trial ${daysLeft === 0 ? "ends today" : `ends in ${daysLeft} day${daysLeft === 1 ? "" : "s"}`} — then ${PRO_PRICE_DISPLAY} on Pro.`
+                    : user.plan === "PAST_DUE"
+                      ? "We couldn't charge your card — update it to keep your subscription active."
+                      : "Your trial has ended. Resubscribe to get back in."}
+              </p>
+              <ManageBillingButton />
             </div>
           </Card>
         </div>
