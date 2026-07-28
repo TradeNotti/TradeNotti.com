@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { currentUserSafe, getOrCreateUser } from "@/lib/session";
-import { hasAccess, PRO_PRICE_USD, MAX_ACCOUNTS_TRIAL, MAX_ACCOUNTS_PRO, TRIAL_DAYS } from "@/lib/billing";
+import {
+  hasAccess,
+  PRO_PRICE_USD,
+  PRO_PRICE_WEEKLY_USD,
+  MAX_ACCOUNTS_TRIAL,
+  MAX_ACCOUNTS_PRO,
+  TRIAL_DAYS,
+} from "@/lib/billing";
 import { Icon, BrandLogo } from "@/components/ui";
 import { StartTrialButton } from "./start-trial-button";
+import { ProPrice } from "./pro-price";
 
 export const dynamic = "force-dynamic";
 
@@ -68,12 +76,10 @@ export default async function PricingPage() {
 
             <div className="pp-plan-card featured">
               <div className="pp-plan-name">Pro</div>
-              <div className="pp-plan-price">
-                <span className="pp-plan-cur">$</span>
-                {PRO_PRICE_USD}
-                <span className="pp-plan-per">/mo</span>
+              <ProPrice monthlyUsd={PRO_PRICE_USD} weeklyUsd={PRO_PRICE_WEEKLY_USD} />
+              <div className="pp-plan-sub" style={{ marginTop: 8 }}>
+                What your trial becomes once it ends.
               </div>
-              <div className="pp-plan-sub">What your trial becomes once it ends.</div>
               <ul className="pp-plan-feats">
                 <li>
                   <Icon name="check" size={16} /> Everything in the trial

@@ -8,8 +8,15 @@ export const TRIAL_DAYS = 7;
 // terms page, and Checkout Session description all read from here. The
 // amount actually charged comes from Stripe's Price (STRIPE_PRICE_ID) — keep
 // that in sync with this constant when it changes.
-export const PRO_PRICE_USD = 10;
-export const PRO_PRICE_DISPLAY = `$${PRO_PRICE_USD}/mo`;
+export const PRO_PRICE_USD = 9.99;
+export const PRO_PRICE_DISPLAY = `$${PRO_PRICE_USD.toFixed(2)}/mo`;
+
+// Weekly framing of the same monthly price (monthly ÷ 4), shown on the
+// pricing page as a toggle. This is display-only — billing itself is still
+// monthly (STRIPE_PRICE_ID); a real weekly-billed subscription would need
+// its own Stripe Price before this could be an actual checkout option.
+export const PRO_PRICE_WEEKLY_USD = Math.round((PRO_PRICE_USD / 4) * 100) / 100;
+export const PRO_PRICE_WEEKLY_DISPLAY = `$${PRO_PRICE_WEEKLY_USD.toFixed(2)}/wk`;
 
 export const MAX_ACCOUNTS_TRIAL = 1;
 export const MAX_ACCOUNTS_PRO = 2;
