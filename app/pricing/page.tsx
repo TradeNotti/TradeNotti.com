@@ -38,10 +38,10 @@ export default async function PricingPage() {
             <span className="overline" style={{ color: "var(--gold-deep)" }}>
               Pricing
             </span>
-            <h1 style={{ marginTop: 10 }}>Simple, honest pricing.</h1>
+            <h1 style={{ marginTop: 10 }}>Simple pricing. Serious trading results.</h1>
             <p className="pp-hero-sub" style={{ margin: "14px auto 0" }}>
-              Every account starts with a {TRIAL_DAYS}-day free trial — card required, but you&rsquo;re not charged
-              until it ends. Cancel anytime before then and you pay nothing.
+              Start with a {TRIAL_DAYS}-day free trial and experience the complete TradeNotti workflow. No charges
+              until your trial ends, and you can cancel anytime.
             </p>
           </div>
 
