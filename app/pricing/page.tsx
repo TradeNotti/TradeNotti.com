@@ -88,7 +88,10 @@ export default async function PricingPage() {
                   <Icon name="check" size={16} /> Voice journaling
                 </li>
                 <li>
-                  <Icon name="check" size={16} /> Everything in the trial
+                  <Icon name="check" size={16} /> Journal, notebook &amp; analytics
+                </li>
+                <li>
+                  <Icon name="check" size={16} /> Daily AI insight
                 </li>
                 <li>
                   <Icon name="check" size={16} /> Multiple accounts — up to {MAX_ACCOUNTS_PRO}
