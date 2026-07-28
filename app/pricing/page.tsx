@@ -63,6 +63,9 @@ export default async function PricingPage() {
               <div className="pp-plan-sub">Full access to try TradeNotti before you&rsquo;re charged.</div>
               <ul className="pp-plan-feats">
                 <li>
+                  <Icon name="check" size={16} /> Voice journaling
+                </li>
+                <li>
                   <Icon name="check" size={16} /> Journal, notebook &amp; analytics
                 </li>
                 <li>
@@ -82,10 +85,13 @@ export default async function PricingPage() {
               </div>
               <ul className="pp-plan-feats">
                 <li>
+                  <Icon name="check" size={16} /> Voice journaling
+                </li>
+                <li>
                   <Icon name="check" size={16} /> Everything in the trial
                 </li>
                 <li>
-                  <Icon name="check" size={16} /> Up to {MAX_ACCOUNTS_PRO} broker accounts
+                  <Icon name="check" size={16} /> Multiple accounts — up to {MAX_ACCOUNTS_PRO}
                 </li>
                 <li>
                   <Icon name="check" size={16} /> Cancel anytime
