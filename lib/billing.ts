@@ -3,12 +3,11 @@ import type Stripe from "stripe";
 
 export const TRIAL_DAYS = 7;
 
-// Launch/founding price — expect this to move to $15-17/mo once the trial
-// cohort matures. This is the one place the number lives; the pricing page,
-// terms page, and Checkout Session description all read from here. The
-// amount actually charged comes from Stripe's Price (STRIPE_PRICE_ID) — keep
-// that in sync with this constant when it changes.
-export const PRO_PRICE_USD = 9.99;
+// This is the one place the number lives; the pricing page, terms page, and
+// Checkout Session description all read from here. The amount actually
+// charged comes from Stripe's Price (STRIPE_PRICE_ID) — keep that in sync
+// with this constant when it changes.
+export const PRO_PRICE_USD = 15;
 export const PRO_PRICE_DISPLAY = `$${PRO_PRICE_USD.toFixed(2)}/mo`;
 
 // Weekly framing of the same monthly price (monthly ÷ 4), shown on the
